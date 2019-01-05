@@ -1,0 +1,6 @@
+name "dsvdb"
+description "DSVDB central server"
+authors "Jacob Bolton"
+copyright "Copyright © 2019, Jacob Bolton"
+license "proprietary"
+dependency "vibe-d" version="~>0.8.4"

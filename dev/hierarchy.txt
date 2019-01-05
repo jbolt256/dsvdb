@@ -1,0 +1,30 @@
+		SERVER		[N/A]
+		|
+		DATABASE	[Login: operator/password]
+		|
+		ROOM		[i.e Database\Room\Room\Table.dsv]
+		|
+		TABLE		[i.e Database\Room\Table.dsv]
+		|
+		ROW		[i.e Database\Room\Table.dsv#43] (Row 43 in Table)
+
+Databases and rooms store NO data besides metadata. Rooms only exist for the categorization of data.
+Only tables store data.
+
+When creating a handler, the handler is valid only for the database selected. To use a different database,
+a different handler will need to be created, or the current handler must be
+modified. Credentials are verified on every request.
+
+All requests have the following POST information:
+	database: [string name]
+	operatorID: [string opID]
+	operatorPW: [string opPWD]
+	action:	[string op]
+	query:	[json data]
+
+Upon receiving a request, the request handler will create a new database instance, but only after verifying the identity of
+the operator. Should the identification fail, the request is immediately terminated. The database handler then
+interprets and gathers data on itself and existing rooms & tables.
+
+Should the authentication succeed, the request is then sent to an internal request server, where it processes the request. 
+A "GET" request returns json data or internal error. A "POST" request only returns an OK/internal error. 
