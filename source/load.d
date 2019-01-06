@@ -28,3 +28,11 @@ struct StdTable {
 	string database;
 	string[int] rows;
 	}
+	
+/* 
+ * Standard response handler.
+ */
+struct StdHttpResponse {
+	string[int] errors;
+	string buffer;
+}

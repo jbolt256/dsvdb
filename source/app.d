@@ -33,9 +33,10 @@ void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
  */
 string handle(HTTPServerRequest req) {
 	/* Convert DictionaryList to ordinary parameter array */
-	HttpPostReq Params;
-	string[string] postArray;
 	string buffer = null;
+	string[string] postArray;
+	HttpPostReq params;
+	StdHttpResponse res;
 	
 	foreach ( param; req.form.byKeyValue() ) {
 		postArray[param.key] = param.value;
@@ -46,7 +47,7 @@ string handle(HTTPServerRequest req) {
 		
 	/* Next, create a new connection handler. */	
 	if ( "operatorID" in postArray && "operatorPW" in postArray && "database" in postArray ) {
-		auto Connect = new Connection(postArray);
+		auto Connect = new Connection(postArray, res);
 		buffer = Connect.setup();
 	} else {
 		buffer = "A001";

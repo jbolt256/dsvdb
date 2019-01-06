@@ -6,20 +6,21 @@ import dsvdb.Load;
 
 class Connection {
 
+	public StdHttpResponse Res;
 	private HttpPostReq Req;
 	private HttpPostReq[int] ReqAll;
 	private string[string] ReqArray;
 	
-	this(string[string] postArray) {
+	this(string[string] postArray, StdHttpResponse res) {
 		this.ReqArray = postArray;
 		this.Req.database = postArray["database"];
 		this.Req.operatorID = postArray["operatorID"];
 		this.Req.operatorPW = postArray["operatorPW"];
 		this.Req.n = to!ubyte(postArray["n"]);
+		this.Res = res;
 	}
 	
 	public string setup() {
-		string buffer;
 		HttpPostReq TempRequest = this.Req;
 		
 		/* 
@@ -34,16 +35,16 @@ class Connection {
 					TempRequest.action = this.ReqArray["r" ~ to!string(i) ~ "_action"];
 					TempRequest.query = this.ReqArray["r" ~ to!string(i) ~ "_query"];
 				} else 
-					buffer = "A003";
+					this.Res.buffer = "A003";
 					
 				/* Merge ReqAll[i] and TempRequest */
 				this.ReqAll[i] = TempRequest;
 				vibe.core.log.logDebug(TempRequest.action);
-				buffer = "OK";
+				this.Res.buffer = "OK";
 			}
 		} else
-			buffer = "A002";
-		return buffer;
+			this.Res.buffer = "A002";
+		return this.Res.buffer; /* TEMPORARY */
 	}
 	
 	private void auth() {
