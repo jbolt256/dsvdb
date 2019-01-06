@@ -1,0 +1,1 @@
+./curl.exe -d "operatorID=1&operatorPW=2&database=1&r1_action=t&r1_query=s" "http://localhost:8080/"
