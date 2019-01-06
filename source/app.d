@@ -2,7 +2,7 @@ module dsvdb.App;
 
 import vibe.vibe;
 import dsvdb.Load;
-import dsvdb.Core.Database;
+import dsvdb.Core.Connection;
 
 string DSVDB_VERSION = "0.0.1";
 
@@ -33,6 +33,7 @@ void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
  */
 string handle(HTTPServerRequest req) {
 	/* Convert DictionaryList to ordinary parameter array */
+	HttpPostReq Params;
 	string[string] postArray;
 	string buffer = null;
 	
@@ -40,10 +41,16 @@ string handle(HTTPServerRequest req) {
 		postArray[param.key] = param.value;
 	}
 	
-	/* Next, create a new database handler 
-	 * Ensure that required parameters all exist.
-	 */	
-	if ( "operatorID" in postArray && "operatorPW" in postArray && "database" in postArray && "action" in postArray && "query" in postArray ) {}
-	//auto DB = new Database();
+	if ( "n" !in postArray ) 
+		postArray["n"] = "1";
+		
+	/* Next, create a new connection handler. */	
+	if ( "operatorID" in postArray && "operatorPW" in postArray && "database" in postArray ) {
+		auto Connect = new Connection(postArray);
+		buffer = Connect.setup();
+	} else {
+		buffer = "A001";
+	}
+	
 	return buffer;
 }

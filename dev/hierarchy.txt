@@ -28,3 +28,7 @@ interprets and gathers data on itself and existing rooms & tables.
 
 Should the authentication succeed, the request is then sent to an internal request server, where it processes the request. 
 A "GET" request returns json data or internal error. A "POST" request only returns an OK/internal error. 
+
+A connection handler handles the overall connection. A request handler handles each individual request. In order to 
+improve performance, dsvdb allows for a maximum of 32 simultaneous requests, which are handled synchronously by
+dsvdb.
