@@ -33,6 +33,20 @@ struct StdTable {
  * Standard response handler.
  */
 struct StdHttpResponse {
-	string[int] errors;
+	string[] errors;
 	string buffer;
+	int code;
 }
+
+/*
+ *
+ */
+struct schemaOperator {
+	short id;
+	string password;
+	string created;
+	string name;
+	string stores;
+	}
+	
+	

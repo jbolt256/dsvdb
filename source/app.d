@@ -3,6 +3,7 @@ module dsvdb.App;
 import vibe.vibe;
 import dsvdb.Load;
 import dsvdb.Core.Connection;
+import dsvdb.Core.Parser;
 
 string DSVDB_VERSION = "0.0.1";
 
@@ -21,10 +22,13 @@ void main()
  */
 void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
 {
+	auto PR = new Parser();
 	if ( req.path == "/" )
 		res.writeBody(handle(req));
 	if ( req.path == "/vers" ) 
 		res.writeBody(DSVDB_VERSION);
+	if ( req.path == "/test" ) 
+		res.writeBody(PR.file("./test.dsv"));
 }
 
 /**
@@ -33,7 +37,6 @@ void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
  */
 string handle(HTTPServerRequest req) {
 	/* Convert DictionaryList to ordinary parameter array */
-	string buffer = null;
 	string[string] postArray;
 	HttpPostReq params;
 	StdHttpResponse res;
@@ -48,10 +51,10 @@ string handle(HTTPServerRequest req) {
 	/* Next, create a new connection handler. */	
 	if ( "operatorID" in postArray && "operatorPW" in postArray && "database" in postArray ) {
 		auto Connect = new Connection(postArray, res);
-		buffer = Connect.setup();
+		res = Connect.setup();
 	} else {
-		buffer = "A001";
+		res.errors ~= "A001";
 	}
 	
-	return buffer;
+	return res.errors[0];
 }
