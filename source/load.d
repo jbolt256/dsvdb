@@ -33,7 +33,6 @@ struct StdTable {
  * Standard response handler.
  */
 struct StdHttpResponse {
-	string[] errors;
 	string buffer;
 	int code;
 }

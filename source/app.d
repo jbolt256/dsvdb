@@ -53,8 +53,8 @@ string handle(HTTPServerRequest req) {
 		auto Connect = new Connection(postArray, res);
 		res = Connect.setup();
 	} else {
-		res.errors ~= "A001";
+		/**/
 	}
 	
-	return res.errors[0];
+	return res.buffer;
 }

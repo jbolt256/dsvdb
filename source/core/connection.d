@@ -10,6 +10,10 @@ class Connection {
 	private HttpPostReq[] ReqAll;
 	private string[string] ReqArray;
 	
+	
+	/*
+	 * Set up and format single-use request variables.
+	 */
 	this(string[string] postArray, StdHttpResponse res) {
 		this.ReqArray = postArray;
 		this.Req.database = postArray["database"];
@@ -33,21 +37,13 @@ class Connection {
 				if ( "r" ~ to!string(i) ~ "_action" in this.ReqArray && "r" ~ to!string(i) ~ "_query" in this.ReqArray ) {
 					TempRequest.action = this.ReqArray["r" ~ to!string(i) ~ "_action"];
 					TempRequest.query = this.ReqArray["r" ~ to!string(i) ~ "_query"];
-				} else 
-					this.Res.errors ~= "A003";
+				}
 					
 				/* Merge ReqAll[i] and TempRequest */
 				this.ReqAll[i] = TempRequest;
-				vibe.core.log.logDebug(TempRequest.action);
-				this.Res.code = 1;
 			}
-		} else
-			this.Res.errors ~= "A002";
+		}
 			
 		return this.Res;
-	}
-	
-	private void auth() {
-		
 	}
 }
