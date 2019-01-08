@@ -1,6 +1,5 @@
 module dsvdb.Core.Connection;
 
-import vibe.vibe;
 import std.conv;
 import dsvdb.Load;
 
@@ -9,7 +8,6 @@ class Connection {
 	private HttpPostReq Req;
 	private HttpPostReq[] ReqAll;
 	private string[string] ReqArray;
-	
 	
 	/*
 	 * Set up and format single-use request variables.

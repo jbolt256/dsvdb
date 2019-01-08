@@ -1,9 +1,10 @@
 module dsvdb.Core.Parser;
 
-import std.file;
 import std.array;
 import std.conv;
+import std.file;
 import dsvdb.Load;
+import dsvdb.Ext.Debug;
 
 class Parser {
 	this() {}
@@ -14,6 +15,7 @@ class Parser {
 	 */
 	public string file(string pathname) {
 		/* Set up variables */
+		int numLines, horizontalWidth;
 		string rawText;
 		string[] schema;
 		string[] splitLine;
@@ -24,19 +26,29 @@ class Parser {
 		if ( pathname.isFile ) {
 			rawText = std.file.readText(pathname);
 			splitText = rawText.split("\r\n");
+			numLines = splitText.length; 
 			
 			/* Determine schema from the first line */
 			schema = splitText[0].split("^_");
-						
-			/* Parse text according to schema */
-			foreach ( i, line; splitText ) {
-				splitLine = line.split("^_");
-				foreach ( k, unit; splitLine ) {
-					parsedText[i][schema[k]] = line.split("^_")[k];					
+			horizontalWidth = schema.length;
+			
+			/* Ensure that first line is formatted correctly */
+			if ( schema.length > 0 ) {
+				/* Parse text according to schema */
+				foreach ( i, line; splitText ) {
+					splitLine = line.split("^_");
+					/* Ensure that the number of COLUMN ID's equals the width of each row */
+					if ( splitLine.length == horizontalWidth ) {
+						foreach ( k, unit; splitLine ) {
+							parsedText[i][schema[k]] = line.split("^_")[k];					
+						}
+					}
 				}
-			}
-		}
+			} else 
+				dsvdb.Ext.Debug.log("dev", "Zero-length schema provided.");
+		} else
+			dsvdb.Ext.Debug.log("dev", "Cannot parse non-existant file.");
 		
-		return "";
+		return parsedText[1]["COL1"];
 	}
 }

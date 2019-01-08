@@ -4,6 +4,7 @@ import vibe.vibe;
 import dsvdb.Load;
 import dsvdb.Core.Connection;
 import dsvdb.Core.Parser;
+import dsvdb.Ext.Debug;
 
 string DSVDB_VERSION = "0.0.1";
 
@@ -38,13 +39,14 @@ void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
 string handle(HTTPServerRequest req) {
 	/* Convert DictionaryList to ordinary parameter array */
 	string[string] postArray;
-	HttpPostReq params;
 	StdHttpResponse res;
 	
+	/* Loop over POST values provided */
 	foreach ( param; req.form.byKeyValue() ) {
 		postArray[param.key] = param.value;
 	}
 	
+	/* If 'n' (number of synchronous requests) is not provided, assume one */
 	if ( "n" !in postArray ) 
 		postArray["n"] = "1";
 		
