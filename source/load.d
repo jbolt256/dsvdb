@@ -1,6 +1,7 @@
 module dsvdb.Load;
 
 const DSVDB_MAX_REQUESTS = 16;
+const DSVDB_DATABASE_DIR = "./db";
 
 /*
  * Standard HTTP POST request, including operator information and n (number of requests to be handled).
@@ -18,10 +19,12 @@ struct HttpPostReq {
  * Standard Table handler.
  */
 struct StdTable {
+	int size;
+	int numRows;
 	string table;
 	string pathname;
 	string database;
-	string[string][int] rows;
+	string[string][uint] rows;
 	}
 	
 /* 
@@ -29,5 +32,15 @@ struct StdTable {
  */
 struct StdHttpResponse {
 	string buffer;
-	int code;
+	ubyte code;
+}
+
+/*
+ * 
+ */
+struct StdOperator {
+	ushort operatorID;
+	string opertaorPW;
+	string name;
+	string[] stores;
 }

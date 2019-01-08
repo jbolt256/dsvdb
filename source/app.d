@@ -29,7 +29,7 @@ void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
 	if ( req.path == "/vers" ) 
 		res.writeBody(DSVDB_VERSION);
 	if ( req.path == "/test" ) 
-		res.writeBody(PR.file("./test.dsv"));
+		res.writeBody(PR.parse("./test.dsv"));
 }
 
 /**

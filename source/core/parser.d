@@ -6,6 +6,12 @@ import std.file;
 import dsvdb.Load;
 import dsvdb.Ext.Debug;
 
+/**
+ * The Parser class handles all file-related functions, including:
+ * -- reading files
+ * -- parsing files
+ * -- deleting/creating files
+ */
 class Parser {
 	this() {}
 	
@@ -13,14 +19,14 @@ class Parser {
 	 * Parses a DSV file.
 	 * First line is schema.
 	 */
-	public string file(string pathname) {
+	public string parse(string pathname) {
 		/* Set up variables */
 		int numLines, horizontalWidth;
 		string rawText;
 		string[] schema;
 		string[] splitLine;
 		string[] splitText;
-		string[string][int] parsedText;
+		string[string][uint] parsedText;
 		
 		/**/
 		if ( pathname.isFile ) {
@@ -34,6 +40,7 @@ class Parser {
 			
 			/* Ensure that first line is formatted correctly */
 			if ( schema.length > 0 ) {
+			
 				/* Parse text according to schema */
 				foreach ( i, line; splitText ) {
 					splitLine = line.split("^_");
@@ -42,10 +49,11 @@ class Parser {
 						foreach ( k, unit; splitLine ) {
 							parsedText[i][schema[k]] = line.split("^_")[k];					
 						}
-					}
+					} else 
+						dsvdb.Ext.Debug.log("dev", "Line has different horizontal width than schema.");
 				}
 			} else 
-				dsvdb.Ext.Debug.log("dev", "Zero-length schema provided.");
+				dsvdb.Ext.Debug.log("dev", "Zero-length schema provided on line one.");
 		} else
 			dsvdb.Ext.Debug.log("dev", "Cannot parse non-existant file.");
 		

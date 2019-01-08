@@ -39,6 +39,8 @@ class Connection {
 					
 				/* Merge ReqAll[i] and TempRequest */
 				this.ReqAll[i] = TempRequest;
+				
+				/* Next, process and execute request */
 			}
 		}
 			
