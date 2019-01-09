@@ -2,6 +2,7 @@ module dsvdb.Core.Connection;
 
 import std.conv;
 import dsvdb.Load;
+import dsvdb.Core.Requests;
 
 class Connection {
 	public StdHttpResponse Res;
@@ -41,9 +42,16 @@ class Connection {
 				this.ReqAll[i] = TempRequest;
 				
 				/* Next, process and execute request */
+				this.Res = this.process(TempRequest);
 			}
 		}
 			
 		return this.Res;
+	}
+	
+	public StdHttpResponse process(HttpPostReq request) {
+		StdHttpResponse response;
+		auto REQ = new Requests();
+		return response;
 	}
 }

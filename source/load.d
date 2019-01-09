@@ -40,7 +40,7 @@ struct StdHttpResponse {
  */
 struct StdOperator {
 	ushort operatorID;
-	string opertaorPW;
+	string operatorPW;
 	string name;
 	string[] stores;
 }
