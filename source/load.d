@@ -36,11 +36,18 @@ struct StdHttpResponse {
 }
 
 /*
- * 
+ * Standard operator handler.
  */
 struct StdOperator {
 	ushort operatorID;
 	string operatorPW;
 	string name;
 	string[] stores;
+}
+
+/*
+ *
+ */
+struct StdConnection {
+	int code;
 }
