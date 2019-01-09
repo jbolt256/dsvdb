@@ -1,5 +1,6 @@
 module dsvdb.Load;
 
+const DSVDB_DELIMETER = "^_";
 const DSVDB_MAX_REQUESTS = 16;
 const DSVDB_DATABASE_DIR = "./db";
 

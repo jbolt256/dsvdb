@@ -3,12 +3,14 @@ module dsvdb.Core.Connection;
 import std.conv;
 import dsvdb.Load;
 import dsvdb.Core.Requests;
+import dsvdb.Ext.Debug;
 
 class Connection {
 	public StdHttpResponse Res;
+	public StdHttpResponse ResOut;
 	private StdConnection Con;
 	private HttpPostReq Req;
-	private HttpPostReq[] ReqAll;
+	private HttpPostReq[int] ReqAll;
 	private string[string] ReqArray;
 	
 	/**
@@ -28,6 +30,7 @@ class Connection {
 		this.Req.n = to!ubyte(postArray["n"]);
 		
 		this.Res = res;		
+		this.ResOut = res;
 	}
 	
 	/**
@@ -54,10 +57,11 @@ class Connection {
 				
 				/* Next, process and execute request */
 				this.Res = this.process(TempRequest);
+				this.ResOut.buffer ~= this.Res.buffer ~ "|||";
 			}
 		}
 			
-		return this.Res;
+		return this.ResOut;
 	}
 	
 	/**
@@ -66,7 +70,11 @@ class Connection {
 	public StdHttpResponse process(HttpPostReq request) {
 		StdHttpResponse response;
 		auto REQ = new Requests();
-		REQ.Methods["t"]();
+		
+		if ( request.action in REQ.Methods ) {
+			response.buffer = REQ.Methods[request.action]();
+		} else
+			dsvdb.Ext.Debug.log("dev", "Action not found.");
 		
 		return response;
 	}

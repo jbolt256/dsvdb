@@ -36,7 +36,7 @@ class Parser {
 			numLines = splitText.length; 
 			
 			/* Determine schema from the first line */
-			schema = splitText[0].split("^_");
+			schema = splitText[0].split(DSVDB_DELIMETER);
 			horizontalWidth = schema.length;
 			
 			/* Ensure that first line is formatted correctly */
@@ -44,11 +44,11 @@ class Parser {
 			
 				/* Parse text according to schema */
 				foreach ( i, line; splitText ) {
-					splitLine = line.split("^_");
+					splitLine = line.split(DSVDB_DELIMETER);
 					/* Ensure that the number of COLUMN ID's equals the width of each row */
 					if ( splitLine.length == horizontalWidth ) {
 						foreach ( k, unit; splitLine ) {
-							parsedText[i][schema[k]] = line.split("^_")[k];					
+							parsedText[i][schema[k]] = line.split(DSVDB_DELIMETER)[k];					
 						}
 					} else 
 						dsvdb.Ext.Debug.log("dev", "Line has different horizontal width than schema.");
