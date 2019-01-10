@@ -1,6 +1,7 @@
 module dsvdb.App;
 
 import vibe.vibe;
+import std.conv;
 import dsvdb.Load;
 import dsvdb.Core.Connection;
 import dsvdb.Core.Table;
@@ -31,7 +32,7 @@ void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
 	if ( req.path == "/vers" ) 
 		res.writeBody(DSVDB_VERSION);
 	if ( req.path == "/test" ) 
-		res.writeBody(TestTable.rows[0]["COL1"]);
+		res.writeBody(to!string(TAB.getRowsByColValue(TestTable, "t", "COL1")[1]));
 }
 
 /**

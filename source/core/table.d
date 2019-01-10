@@ -11,7 +11,10 @@ class Table {
 	this() {
 		this.PAR = new Parser();
 	}
-
+	
+	/**
+	 * Initialize a new standard table handle.
+	 */
 	public StdTable init(string database, string tablePath) {
 		StdTable Table;
 		string absolutePath = DSVDB_DATABASE_DIR ~ "/" ~ database ~ "/" ~ tablePath ~ ".dsv";
@@ -24,6 +27,22 @@ class Table {
 		Table.database = database;
 		
 		return Table;
+	}
+	
+	/**
+	 * Get row numbers of all ocurrences of VALUE in a given column COLUMN.
+	 * Returns a dynamic uint array.
+	 */
+	public uint[] getRowsByColValue(StdTable Table, string value, string column) {
+		uint[] find;
+		
+		for ( uint i = 0; i < Table.numRows; i++ ) {
+			if ( value == Table.rows[i][column] ) {
+				find ~= i;
+			}
+		}
+		
+		return find;
 	}
 	
 }
