@@ -8,6 +8,7 @@ import dsvdb.Ext.Debug;
 class Connection {
 	public StdHttpResponse Res;
 	public StdHttpResponse ResOut;
+	private Requests REQ;
 	private StdConnection Con;
 	private HttpPostReq Req;
 	private HttpPostReq[int] ReqAll;
@@ -18,6 +19,7 @@ class Connection {
 	 */
 	this(string[string] postArray, StdHttpResponse res) {
 		this.ReqArray = postArray;
+		this.REQ = new Requests();
 		
 		/* 
 		 * Constants included with each request 
@@ -69,7 +71,6 @@ class Connection {
 	 */
 	public StdHttpResponse process(HttpPostReq request) {
 		StdHttpResponse response;
-		auto REQ = new Requests();
 		
 		if ( request.action in REQ.Methods ) {
 			response.buffer = REQ.Methods[request.action]();

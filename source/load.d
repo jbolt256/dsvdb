@@ -1,8 +1,8 @@
 module dsvdb.Load;
 
+const DSVDB_DATABASE_DIR = "./dev/db";
 const DSVDB_DELIMETER = "^_";
 const DSVDB_MAX_REQUESTS = 16;
-const DSVDB_DATABASE_DIR = "./db";
 
 /*
  * Standard HTTP POST request, including operator information and n (number of requests to be handled).
@@ -13,7 +13,7 @@ struct HttpPostReq {
 	string database;
 	string action;
 	string query;
-	byte n;
+	ubyte n;
 	}
 	
 /*

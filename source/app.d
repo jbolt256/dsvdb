@@ -3,7 +3,7 @@ module dsvdb.App;
 import vibe.vibe;
 import dsvdb.Load;
 import dsvdb.Core.Connection;
-import dsvdb.Core.Parser;
+import dsvdb.Core.Table;
 import dsvdb.Ext.Debug;
 
 string DSVDB_VERSION = "0.0.1";
@@ -23,13 +23,15 @@ void main()
  */
 void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
 {
-	auto PR = new Parser();
+	auto TAB = new Table();
+	StdTable TestTable = TAB.init("testdb", "test");
+	
 	if ( req.path == "/" )
 		res.writeBody(handle(req));
 	if ( req.path == "/vers" ) 
 		res.writeBody(DSVDB_VERSION);
 	if ( req.path == "/test" ) 
-		res.writeBody(PR.parse("./test.dsv"));
+		res.writeBody(TestTable.rows[0]["COL1"]);
 }
 
 /**
