@@ -28,18 +28,18 @@ void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
 	StdTable TestTable = TAB.init("testdb", "test");
 	
 	if ( req.path == "/" )
-		res.writeBody(handle(req));
+		res.writeBody(preprocess(req));
 	if ( req.path == "/vers" ) 
 		res.writeBody(DSVDB_VERSION);
 	if ( req.path == "/test" ) 
-		res.writeBody(to!string(TAB.getRowsByColValue(TestTable, "t", "COL1")[1]));
+		res.writeBody(to!string(TAB.getRowByIndex(TestTable, 4)["COL1"]));
 }
 
 /**
  * @function handle
  * Entry-point for backend access.
  */
-string handle(HTTPServerRequest req) {
+string preprocess(HTTPServerRequest req) {
 	/* Convert DictionaryList to ordinary parameter array */
 	string[string] postArray;
 	StdHttpResponse res;
@@ -57,8 +57,6 @@ string handle(HTTPServerRequest req) {
 	if ( "operatorID" in postArray && "operatorPW" in postArray && "database" in postArray ) {
 		auto Connect = new Connection(postArray, res);
 		res = Connect.setup();
-	} else {
-		/**/
 	}
 	
 	return res.buffer;

@@ -30,10 +30,21 @@ class Table {
 	}
 	
 	/**
+	 * Returns row handle from index.
+	 */
+	public string[string] getRowByIndex(StdTable Table, uint index) {
+		string[string] ret;
+		if ( index <= Table.numRows ) {
+			ret = Table.rows[index-1];
+			}
+		return ret;
+	}
+	
+	/**
 	 * Get row numbers of all ocurrences of VALUE in a given column COLUMN.
 	 * Returns a dynamic uint array.
 	 */
-	public uint[] getRowsByColValue(StdTable Table, string value, string column) {
+	public uint[] getIndexByColValue(StdTable Table, string value, string column) {
 		uint[] find;
 		
 		for ( uint i = 0; i < Table.numRows; i++ ) {
@@ -44,5 +55,8 @@ class Table {
 		
 		return find;
 	}
-	
+		
+	/**
+	 *
+	 */
 }

@@ -4,7 +4,9 @@ const DSVDB_DATABASE_DIR = "./dev/db";
 const DSVDB_DELIMETER = "^_";
 const DSVDB_MAX_REQUESTS = 16;
 
-alias RowDataStructure = string[string][uint];
+alias TableRowData = string[string][uint];
+alias RowData = string[string];
+
 /*
  * Standard HTTP POST request, including operator information and n (number of requests to be handled).
  */

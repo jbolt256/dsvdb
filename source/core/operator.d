@@ -7,7 +7,7 @@ import dsvdb.Core.Table;
 
 class Operator {
 	private Table TAB;
-	private RowDataStructure operators;
+	private TableRowData operators;
 	private StdTable OpTable;
 	
 	this() {
