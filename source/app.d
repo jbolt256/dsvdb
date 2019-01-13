@@ -32,7 +32,7 @@ void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
 	if ( req.path == "/vers" ) 
 		res.writeBody(DSVDB_VERSION);
 	if ( req.path == "/test" ) 
-		res.writeBody(to!string(TAB.getRowByIndex(TestTable, 4)["COL1"]));
+		res.writeBody(to!string(TAB.getRowsByColValue(TestTable, "t", "COL1")[1]["COL2"]));
 }
 
 /**

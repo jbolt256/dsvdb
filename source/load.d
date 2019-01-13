@@ -5,6 +5,7 @@ const DSVDB_DELIMETER = "^_";
 const DSVDB_MAX_REQUESTS = 16;
 
 alias TableRowData = string[string][uint];
+alias FreeTableRowData = string[string][];
 alias RowData = string[string];
 
 /*
