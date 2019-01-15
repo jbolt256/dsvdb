@@ -1,0 +1,13 @@
+When a new connection is made, the following conditions MUST be met (every single one), or else the program should
+immediately terminate without any further execution.
+* OperatorID, OperatorPW, database, and the n parameters MUST be provided. However, for the n parameter, if it is not
+set, it will default to one (1).
+* n must be equal to the actual number of provided requests.
+* The operator's identification must be verified (authenticated).
+* All the r*_action and r*_query parameters must be provided for each action query.
+
+The following conditions should be met, and will throw an error if not met, but will not result in the program terminating:
+* all actions exist
+* all parameters required by action are provided in query
+
+In the event that one or both of these conditions are not met, the response for that action query will be "ERR".

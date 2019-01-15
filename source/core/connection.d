@@ -52,7 +52,8 @@ class Connection {
 				if ( "r" ~ to!string(i) ~ "_action" in this.ReqArray && "r" ~ to!string(i) ~ "_query" in this.ReqArray ) {
 					TempRequest.action = this.ReqArray["r" ~ to!string(i) ~ "_action"];
 					TempRequest.query = this.ReqArray["r" ~ to!string(i) ~ "_query"];
-				}
+				} else
+					dsvdb.Ext.Debug.elog("dev", "Not all request parameters provided.");
 				
 				/* Merge ReqAll[i] and TempRequest */
 				this.ReqAll[i] = TempRequest;

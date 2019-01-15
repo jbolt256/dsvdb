@@ -20,7 +20,8 @@ void main()
 
 /** 
  * Params: 
- * Returns: void
+ *		req = standard vibe HTTP request
+ *		res = standard vibe HTTP response
  */
 void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
 {
@@ -32,11 +33,10 @@ void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
 	if ( req.path == "/vers" ) 
 		res.writeBody(DSVDB_VERSION);
 	if ( req.path == "/test" ) 
-		res.writeBody(to!string(TAB.getRowsByColValue(TestTable, "t", "COL1")[1]["COL2"]));
+		res.writeBody(to!string(TAB.rowExistsByColValue(TestTable, "t", "COL1")));
 }
 
 /**
- * @function handle
  * Entry-point for backend access.
  */
 string preprocess(HTTPServerRequest req) {
@@ -57,7 +57,8 @@ string preprocess(HTTPServerRequest req) {
 	if ( "operatorID" in postArray && "operatorPW" in postArray && "database" in postArray ) {
 		auto Connect = new Connection(postArray, res);
 		res = Connect.setup();
-	}
+	} else
+		res.buffer = "PARAM_ERR";
 	
 	return res.buffer;
 }

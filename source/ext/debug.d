@@ -19,3 +19,8 @@ static void log(string log, string message) {
 static void clear(string log) {
 	std.file.write("./dev/logs/" ~ log ~ ".log", "");
 }
+
+static void elog(string logN, string message) {
+	log(logN, message);
+	assert(0);
+}

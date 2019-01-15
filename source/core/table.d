@@ -55,7 +55,22 @@ class Table {
 		return ret;
 	}
 	
+	/**
+	 * Value exists?
+	 */
+	public bool rowExistsByColValue(StdTable Table, string value, string column) {
+		FreeTableRowData Dummy;
+		if ( this.getRowsByColValue(Table, value, column) == Dummy ) {
+			return false;
+			} else {
+			return true;
+			}
+	}
 	
+	
+	/**
+	 * get rows by col value
+	 */
 	public FreeTableRowData getRowsByColValue(StdTable Table, string value, string column) {
 		uint[] indexes = this.getIndexByColValue(Table, value, column);
 		FreeTableRowData Rows;
