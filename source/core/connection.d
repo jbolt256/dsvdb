@@ -1,6 +1,7 @@
 module dsvdb.Core.Connection;
 
 import std.conv;
+import std.random;
 import dsvdb.Load;
 import dsvdb.Core.Requests;
 import dsvdb.Ext.Debug;
@@ -36,6 +37,9 @@ class Connection {
 		
 		this.Res = res;		
 		this.ResOut = res;
+		
+		auto Rand = std.random.Random(256);
+		this.Con.uid = std.random.uniform(0, 1024, Rand);
 	}
 	
 	/**

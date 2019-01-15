@@ -61,4 +61,6 @@ class Parser {
 		
 		return parsedText;
 	}
+	
+	/* TODO: implement file write function that is safe */
 }

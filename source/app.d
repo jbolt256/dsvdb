@@ -32,6 +32,7 @@ void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
 	
 	if ( req.path == "/" )
 		res.writeBody(preprocess(req));
+		dsvdb.Ext.Debug.log("dev", "TEST");
 	if ( req.path == "/vers" ) 
 		res.writeBody(DSVDB_VERSION);
 	if ( req.path == "/test" ) 

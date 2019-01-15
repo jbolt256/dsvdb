@@ -23,13 +23,15 @@ class Operator {
 	 */
 	public StdOperator init(string operatorID, string operatorPW) {
 		StdOperator operator;
+		RowData operatorData;
+		
 		operator.auth = false;
 		operator.operatorID = to!ushort(operatorID);
 		operator.operatorPW = operatorPW;
 		
-		if ( this.TAB.rowExistsByColValue(operatorID, "ID") ) {
-			operators = this.TAB.getRowsByColValue(operatorID, "ID")[0];
-			if ( operators["PASSWORD"] == operatorPW ) {
+		if ( this.TAB.rowExistsByColValue(this.OpTable, operatorID, "ID") ) {
+			operatorData = this.TAB.getRowsByColValue(this.OpTable, operatorID, "ID")[0];
+			if ( operatorData["PASSWORD"] == operatorPW ) {
 				operator.auth = true;
 			}	
 		} else 
