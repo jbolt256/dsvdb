@@ -11,6 +11,8 @@ string DSVDB_VERSION = "0.0.1";
 
 /**
  * DSVDB main entry point.
+ * Authors: Jacob A. Bolton
+ * Date 01/14/19
  */
 void main()
 {
@@ -38,6 +40,8 @@ void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
 
 /**
  * Entry-point for backend access.
+ * Params:
+ *		req = vibe HTTPServerRequest from main
  */
 string preprocess(HTTPServerRequest req) {
 	/* Convert DictionaryList to ordinary parameter array */

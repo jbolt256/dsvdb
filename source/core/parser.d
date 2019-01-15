@@ -19,6 +19,8 @@ class Parser {
 	/**
 	 * Parses a DSV file.
 	 * First line is schema.
+	 * Params:
+	 * 		pathname = path to file to parse
 	 */
 	public string[string][uint] parse(string pathname) {
 		/* Set up variables */

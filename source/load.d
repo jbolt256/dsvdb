@@ -48,6 +48,7 @@ struct StdOperator {
 	string operatorPW;
 	string name;
 	string[] stores;
+	bool auth;
 }
 
 /*

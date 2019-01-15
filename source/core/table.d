@@ -14,6 +14,9 @@ class Table {
 	
 	/**
 	 * Initialize a new standard table handle.
+	 * Params:
+	 *		database = database to select
+	 *		tablePath = relative path to table
 	 */
 	public StdTable init(string database, string tablePath) {
 		StdTable Table;
@@ -32,6 +35,10 @@ class Table {
 	/**
 	 * Get row numbers of all ocurrences of VALUE in a given column COLUMN.
 	 * Returns a dynamic uint array.
+	 * Params:
+	 *		Table = standard table handle
+	 *		value = value to search for
+	 *		column = column to search for value
 	 */
 	public uint[] getIndexByColValue(StdTable Table, string value, string column) {
 		uint[] find;
@@ -46,6 +53,9 @@ class Table {
 	}
 	/**
 	 * Returns row handle from index.
+	 * Params:
+	 * 		Table = standard Table handle
+	 *		index = index to get row from
 	 */
 	public RowData getRowByIndex(StdTable Table, uint index) {
 		RowData ret;
@@ -57,6 +67,10 @@ class Table {
 	
 	/**
 	 * Value exists?
+	 * Params:
+	 *		Table = standard Table handle
+	 *		value = value to search for
+	 *		column = column to search for value
 	 */
 	public bool rowExistsByColValue(StdTable Table, string value, string column) {
 		FreeTableRowData Dummy;
@@ -70,6 +84,11 @@ class Table {
 	
 	/**
 	 * get rows by col value
+	 * Params:
+	 *		Table = standard table handle
+	 *		value = value to search for
+	 * 		column = column to search for value
+	 * Returns: unstructured array of lines, essentially a simple table 
 	 */
 	public FreeTableRowData getRowsByColValue(StdTable Table, string value, string column) {
 		uint[] indexes = this.getIndexByColValue(Table, value, column);

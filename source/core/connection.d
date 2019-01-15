@@ -16,6 +16,9 @@ class Connection {
 	
 	/**
 	 * Set up and format single-use request variables.
+	 * Params:
+	 *		postArray = unorded array of POST parameters from server
+	 *		res = standard HTTP response handle
 	 */
 	this(string[string] postArray, StdHttpResponse res) {
 		this.ReqArray = postArray;
@@ -69,6 +72,8 @@ class Connection {
 	
 	/**
 	 * Process individual request.
+	 * Params:
+	 *		request = standard HttpPostReq data
 	 */
 	public StdHttpResponse process(HttpPostReq request) {
 		StdHttpResponse response;
