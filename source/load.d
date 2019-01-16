@@ -3,7 +3,6 @@ module dsvdb.Load;
 const DSVDB_DATABASE_DIR = "./dev/db";
 const DSVDB_DELIMETER = "^_";
 const DSVDB_MAX_REQUESTS = 16;
-int DSVDB_REQUEST_ID = 0;
 
 alias TableRowData = string[string][uint];
 alias FreeTableRowData = string[string][];

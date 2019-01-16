@@ -33,9 +33,10 @@ class Operator {
 			operatorData = this.TAB.getRowsByColValue(this.OpTable, operatorID, "ID")[0];
 			if ( operatorData["PASSWORD"] == operatorPW ) {
 				operator.auth = true;
-			}	
+			} else 
+				dsvdb.Ext.Debug.log("dev", "Operator password is incorrect.");
 		} else 
-			dsvdb.Ext.Debug.elog("dev", "Operator ID invalid.");
+			dsvdb.Ext.Debug.log("dev", "Operator ID invalid or does not exist in database.");
 		
 		return operator;
 	}

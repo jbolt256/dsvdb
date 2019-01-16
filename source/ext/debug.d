@@ -14,11 +14,11 @@ static void log(string log, string message) {
 	string errorLogPath = "./dev/logs/" ~ log ~ ".log"; // For now, I guess
 	if ( !errorLogPath.isFile ) {
 		std.file.write(errorLogPath, " ");
-		std.file.write(errorLogPath ~ to!string(DSVDB_REQUEST_ID), " ");
+		//std.file.write(errorLogPath ~ to!string(DSVDB_REQUEST_ID), " ");
 		}
 		
 	std.file.append(errorLogPath, format!"[%s] - %s \r\n"(std.datetime.systime.Clock.currTime(), message));
-	std.file.append(errorLogPath ~ to!string(DSVDB_REQUEST_ID), format!"[%s] - %s \r\n"(std.datetime.systime.Clock.currTime(), message));
+	//std.file.append(errorLogPath ~ to!string(DSVDB_REQUEST_ID), format!"[%s] - %s \r\n"(std.datetime.systime.Clock.currTime(), message));
 }
 
 static void clear(string log) {
@@ -27,5 +27,6 @@ static void clear(string log) {
 
 static void elog(string logN, string message) {
 	log(logN, message);
-	assert(0);
+	throw new Exception("");
+	//assert(0);
 }

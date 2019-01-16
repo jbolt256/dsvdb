@@ -33,6 +33,18 @@ class Table {
 	}
 	
 	/**
+	 * Number of times value appears in column in table.
+	 * Params:
+	 *		Table = standard table handle
+	 *		value = value to search for
+	 * 		column = column to search for value
+	 * Returns: number of times specific value/column occurs
+	 */
+	public int instancesOfColValue(StdTable Table, string value, string column) {
+		return this.getRowsByColValue(Table, value, column).length;
+	}
+	
+	/**
 	 * Get row numbers of all ocurrences of VALUE in a given column COLUMN.
 	 * Returns a dynamic uint array.
 	 * Params:
@@ -66,23 +78,6 @@ class Table {
 	}
 	
 	/**
-	 * Value exists?
-	 * Params:
-	 *		Table = standard Table handle
-	 *		value = value to search for
-	 *		column = column to search for value
-	 */
-	public bool rowExistsByColValue(StdTable Table, string value, string column) {
-		FreeTableRowData Dummy;
-		if ( this.getRowsByColValue(Table, value, column) == Dummy ) {
-			return false;
-			} else {
-			return true;
-			}
-	}
-	
-	
-	/**
 	 * get rows by col value
 	 * Params:
 	 *		Table = standard table handle
@@ -98,4 +93,21 @@ class Table {
 			}
 		return Rows;
 	}
+	
+	/**
+	 * Value exists?
+	 * Params:
+	 *		Table = standard Table handle
+	 *		value = value to search for
+	 *		column = column to search for value
+	 */
+	public bool rowExistsByColValue(StdTable Table, string value, string column) {
+		FreeTableRowData Dummy;
+		if ( this.getRowsByColValue(Table, value, column) == Dummy ) {
+			return false;
+			} else {
+			return true;
+			}
+	}
+	
 }

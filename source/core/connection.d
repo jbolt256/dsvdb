@@ -3,6 +3,7 @@ module dsvdb.Core.Connection;
 import std.conv;
 import std.random;
 import dsvdb.Load;
+import dsvdb.Core.Operator;
 import dsvdb.Core.Requests;
 import dsvdb.Ext.Debug;
 
@@ -12,6 +13,7 @@ class Connection {
 	private Requests REQ;
 	private StdConnection Con;
 	private HttpPostReq Req;
+	private Operator Op;
 	private HttpPostReq[int] ReqAll;
 	private string[string] ReqArray;
 	
@@ -22,6 +24,8 @@ class Connection {
 	 *		res = standard HTTP response handle
 	 */
 	this(string[string] postArray, StdHttpResponse res) {
+		this.Op = new Operator();
+		
 		this.ReqArray = postArray;
 		this.REQ = new Requests();
 		
@@ -38,6 +42,7 @@ class Connection {
 		this.Res = res;		
 		this.ResOut = res;
 		
+		/* Generate new random connection id */
 		auto Rand = std.random.Random(256);
 		this.Con.uid = std.random.uniform(0, 1024, Rand);
 	}
@@ -49,27 +54,33 @@ class Connection {
 		HttpPostReq TempRequest = this.Req;
 		
 		/* 
-		 * Determine number of requests to be handled.
-		 * Currently, to prevent server from being overwhelmed by size of single request, limit
-		 * number of batch requests to 16.
+		 * Ensure validity of operator credentials.
 		 */
-		if ( this.Req.n <= DSVDB_MAX_REQUESTS ) {
-			for ( int i = 1; i <= this.Req.n; i++ ) {
-				/* If the request actually exists, add request information to ReqAll */
-				if ( "r" ~ to!string(i) ~ "_action" in this.ReqArray && "r" ~ to!string(i) ~ "_query" in this.ReqArray ) {
-					TempRequest.action = this.ReqArray["r" ~ to!string(i) ~ "_action"];
-					TempRequest.query = this.ReqArray["r" ~ to!string(i) ~ "_query"];
-				} else
-					dsvdb.Ext.Debug.elog("dev", "Not all request parameters provided.");
-				
-				/* Merge ReqAll[i] and TempRequest */
-				this.ReqAll[i] = TempRequest;
-				
-				/* Next, process and execute request */
-				this.Res = this.process(TempRequest);
-				this.ResOut.buffer ~= this.Res.buffer ~ "|||";
+		if ( this.Op.init(this.Req.operatorID, this.Req.operatorPW).auth ) {
+			/* 
+			 * Determine number of requests to be handled.
+			 * Currently, to prevent server from being overwhelmed by size of single request, limit
+			 * number of batch requests to 16.
+			 */
+			if ( this.Req.n <= DSVDB_MAX_REQUESTS ) {
+				for ( int i = 1; i <= this.Req.n; i++ ) {
+					/* If the request actually exists, add request information to ReqAll */
+					if ( "r" ~ to!string(i) ~ "_action" in this.ReqArray && "r" ~ to!string(i) ~ "_query" in this.ReqArray ) {
+						TempRequest.action = this.ReqArray["r" ~ to!string(i) ~ "_action"];
+						TempRequest.query = this.ReqArray["r" ~ to!string(i) ~ "_query"];
+					} else
+						dsvdb.Ext.Debug.elog("dev", "Not all request parameters provided.");
+					
+					/* Merge ReqAll[i] and TempRequest */
+					this.ReqAll[i] = TempRequest;
+					
+					/* Next, process and execute request */
+					this.Res = this.process(TempRequest);
+					this.ResOut.buffer ~= this.Res.buffer ~ "|||";
+				}
 			}
-		}
+		} else 
+			dsvdb.Ext.Debug.log("dev", "Unable to login.");
 			
 		return this.ResOut;
 	}
