@@ -79,8 +79,7 @@ class Connection {
 					this.ResOut.buffer ~= this.Res.buffer ~ "|||";
 				}
 			}
-		} else 
-			dsvdb.Ext.Debug.log("dev", "Unable to login.");
+		}
 			
 		return this.ResOut;
 	}

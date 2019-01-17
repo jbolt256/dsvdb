@@ -62,5 +62,33 @@ class Parser {
 		return parsedText;
 	}
 	
-	/* TODO: implement file write function that is safe */
+	/**
+	 * Safely write to a file.
+	 * Params:
+	 *		file = file name
+	 *		data = raw data
+	 */
+	public bool file_write(string file, string data) {
+		try {
+			std.file.write(file, data);
+			return true;
+		} catch ( Exception e ) {}
+		return false;
+	}
+	
+	/**
+	 * Safely append a file.
+	 * Params:
+	 *		file = file name
+	 *		data = raw data
+	 */
+	public bool file_append(string file, string data) {
+		try { 
+			if ( file.exists ) {
+				std.file.append(file, data);
+				return true;
+			} 
+		} catch ( Exception e ) {}
+		return false;
+			
 }

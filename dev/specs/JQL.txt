@@ -1,0 +1,20 @@
+Standard JQL query:
+
+* Line-breaks are given with a ;
+* A statement may have conditions, but ultimately every statement that returns a value will start with
+FROM.
+
+-- Language to Implement --
+* if/else
+* variables
+* etc
+
+-- Language Syntax -- 
+IF ( condition ) ;
+	[==/!=/>/</>=/<=] ;
+ELSE ;
+
+-- Examples --
+FROM [table] SELECT [*/column] WHERE [column=value]
+FROM [table] SELECT [*/column] BYINDEX [index]
+FROM [table] DELETE [*/column] WHERE [column=value]
